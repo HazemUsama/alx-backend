@@ -21,7 +21,7 @@ class LRUCache(BaseCaching):
             if key in cache:
                 first_key = key
             else:
-                first_key = list(cache)[-1]
+                first_key = list(cache)[0]
                 print('DISCARD: {}'.format(first_key))
             cache.pop(first_key)
         cache[key] = item
