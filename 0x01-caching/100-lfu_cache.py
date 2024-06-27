@@ -6,14 +6,20 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LFUCache(BaseCaching):
+    """ BaseCaching defines:
+      - constants of your caching system
+      - where your data are stored (in a dictionary)
+    """
     def __init__(self):
-        """ Initialize the cache """
+        """ Initiliaze
+        """
         super().__init__()
         self.freq = {}
         self.usage_order = {}
 
     def put(self, key, item):
-        """ Add an item in the cache """
+        """ Print the cache
+        """
         if key is None or item is None:
             return
 
@@ -41,7 +47,8 @@ class LFUCache(BaseCaching):
             self.usage_order[key] = len(self.usage_order) + 1
 
     def get(self, key):
-        """ Get an item by key """
+        """ Add an item in the cache
+        """
         if key is None or key not in self.cache_data:
             return None
         self.freq[key] += 1
