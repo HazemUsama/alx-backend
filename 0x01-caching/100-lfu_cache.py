@@ -26,7 +26,7 @@ class LFUCache(BaseCaching):
         if key in self.cache_data:
             self.cache_data[key] = item
             self.freq[key] += 1
-            self.usage_order[key] = self.usage_order[key] + 1
+            self.usage_order[key] = len(self.usage_order[key])
         else:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 min_freq = min(self.freq.values())
