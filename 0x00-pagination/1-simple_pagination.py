@@ -25,11 +25,11 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        start, end = index_range(page, page_size)
         assert type(page_size) is int and type(page) is int
         assert page > 0
         assert page_size > 0
         self.dataset()
+        start, end = index_range(page, page_size)
         if end >= len(self.__dataset):
             return []
         return self.__dataset[start:end]
