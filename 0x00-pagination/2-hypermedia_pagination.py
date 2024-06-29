@@ -41,14 +41,14 @@ class Server:
         start, end = self.index_range(page, page_size)
         return self.__dataset[start:end]
 
-    def get_hyper(page: int = 1, page_size: int = 10) -> Dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """
         return A dictionary of the following:
         page_size, page, data, next_page, prev_page, total_pages
         """
         data = self.get_page(page, page_size)
         data_len = len(self.dataset())
-        total_pages = int(date_len / page_size)
+        total_pages = int(data_len / page_size)
 
         return {
             "page_size": len(data),
