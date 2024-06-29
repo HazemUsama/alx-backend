@@ -52,11 +52,11 @@ class Server:
 
         [take.append(i) for i in keys if i >= index and len(take) <= page_size]
         if len(take) == page_size:
-            data = [dataset[i] for i in take]
+            data = [dataset[v] for v in take]
             next_index = None
         else:
-            data = [dataset[i] for i in take[:-1]]
-            next_index = take[:-1]
+            data = [dataset[v] for v in take[:-1]]
+            next_index = take[-1]
 
         return {
             "index": index,
