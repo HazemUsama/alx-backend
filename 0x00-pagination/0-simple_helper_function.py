@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-Simple helper function
-"""
+""" Simple helper function """
 
 
 def index_range(page, page_size):
