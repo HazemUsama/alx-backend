@@ -24,6 +24,7 @@ class Server:
 
         return self.__dataset
 
+    @staticmethod
     def index_range(page, page_size):
         """
         return a tuple of size two containing a start index and an end index
@@ -36,5 +37,5 @@ class Server:
         assert type(page_size) is int and type(page) is int
         assert page > 0 and page_size > 0
         self.dataset()
-        start, end = index_range(page, page_size)
+        start, end = self.index_range(page, page_size)
         return self.__dataset[start:end]
