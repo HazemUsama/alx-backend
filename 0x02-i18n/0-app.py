@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', strict_slashes=False)
 def home() -> str:
-    """return simple html file"""
+    """renders a simple html file"""
     return render_template('0-index.html')
 
 
