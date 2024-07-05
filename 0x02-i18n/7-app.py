@@ -2,6 +2,7 @@
 """Simple Flask App module"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from pytz import timezone
 
 
 class Config:
@@ -41,16 +42,48 @@ def before_request() -> None:
 @babel.localeselector
 def get_locale() -> str:
     """Get locale from request"""
-    local = request.args.get('locale', None)
-    if local and local in Config.LANGUAGES:
-        return local
+    locale = request.args.get('locale')
+    if locale and locale in Config.LANGUAGES:
+        return locale
+
+    if g.user:
+        locale = g.user.get('locale')
+        if locale and locale in Config.LANGUAGES:
+            return locale
+
+    locale = request.headers.get('locale')
+    if locale and locale in Config.LANGUAGES:
+        return locale
+
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@babel.timezoneselector
+def get_timezone() -> str:
+    """Get timezone from request"""
+    zone = request.args.get('timezone')
+
+    if zone:
+        try:
+            return timezone(zone).zone
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+
+    if g.user:
+        try:
+            zone = g.user.get('timezone')
+            return timezone(zone).zone
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+
+    return app.config['BABEL_DEFAULT_TIMEZONE']
 
 
 @app.route('/', strict_slashes=False)
 def home() -> str:
     """renders a simple html file"""
-    return render_template('5-index.html', user=g.user)
+    locale = get_locale()
+    return render_template('5-index.html', user=g.user, locale=locale)
 
 
 if __name__ == '__main__':
