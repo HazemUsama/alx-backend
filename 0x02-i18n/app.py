@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Simple Flask App module"""
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from pytz import timezone
+from datetime import datetime
 
 
 class Config:
@@ -37,6 +38,7 @@ def before_request() -> None:
     """Before request handler"""
     user = get_user()
     g.user = user
+    g.time = format_datetime(datetime.now())
 
 
 @babel.localeselector
@@ -82,8 +84,8 @@ def get_timezone() -> str:
 @app.route('/', strict_slashes=False)
 def home() -> str:
     """renders a simple html file"""
-    locale = get_locale()
-    return render_template('7-index.html', user=g.user, locale=locale)
+
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
